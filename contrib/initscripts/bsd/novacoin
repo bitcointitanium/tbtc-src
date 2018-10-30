@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# PROVIDE: BitcoinTitanium
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# BitcoinTitanium_enable (bool): Set to NO by default. Set this variable to YES if you want to enable BitcoinTitanium service.
+# BitcoinTitanium_config (path): Set to /usr/local/etc/BitcoinTitanium.conf by default.
+# BitcoinTitanium_user:  The user account BitcoinTitanium daemon runs as. It uses 'root' user by default.
+# BitcoinTitanium_group: The group account BitcoinTitanium daemon runs as. It uses 'wheel' group by default.
+# BitcoinTitanium_datadir (str): Default to "/var/db/BitcoinTitanium". Base data directory.
+
+. /etc/rc.subr
+
+name=BitcoinTitanium
+rcvar=BitcoinTitanium_enable
+
+: ${BitcoinTitanium_enable:=NO}
+: ${BitcoinTitanium_config=/usr/local/etc/BitcoinTitanium.conf}
+: ${BitcoinTitanium_datadir=/var/db/BitcoinTitanium}
+: ${BitcoinTitanium_user="root"}
+: ${BitcoinTitanium_group="wheel"}
+
+required_files=${BitcoinTitanium_config}
+command=/usr/local/bin/BitcoinTitaniumd
+BitcoinTitanium_chdir=${BitcoinTitanium_datadir}
+pidfile="${BitcoinTitanium_datadir}/BitcoinTitaniumd.pid"
+stop_cmd=BitcoinTitanium_stop
+command_args="-conf=${BitcoinTitanium_config} -datadir=${BitcoinTitanium_datadir} -daemon -pid=${pidfile}"
+start_precmd="${name}_prestart"
+
+BitcoinTitanium_create_datadir()
+{
+	echo "Creating data directory"
+	eval mkdir -p ${BitcoinTitanium_datadir}
+	[ $? -eq 0 ] && chown -R ${BitcoinTitanium_user}:${BitcoinTitanium_group} ${BitcoinTitanium_datadir}
+}
+
+BitcoinTitanium_prestart()
+{
+	if [ ! -d "${BitcoinTitanium_datadir}/." ]; then
+		BitcoinTitanium_create_datadir || return 1
+	fi
+}
+
+BitcoinTitanium_requirepidfile()
+{
+	if [ ! "0`check_pidfile ${pidfile} ${command}`" -gt 1 ]; then
+		echo "${name} not running? (check $pidfile)."
+		exit 1
+	fi
+}
+
+BitcoinTitanium_stop()
+{
+    BitcoinTitanium_requirepidfile
+
+	echo "Stopping ${name}."
+	eval ${command} -conf=${BitcoinTitanium_config} -datadir=${BitcoinTitanium_datadir} stop
+	wait_for_pids ${rc_pid}
+}
+
+load_rc_config $name
+run_rc_command "$1"

@@ -1,0 +1,2 @@
+debian/bin/BitcoinTitaniumd usr/bin
+src/BitcoinTitaniumd usr/lib/BitcoinTitanium

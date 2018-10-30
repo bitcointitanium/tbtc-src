@@ -1,0 +1,11 @@
+[Unit]
+Description=BitcoinTitanium daemon serivce
+After=network.target
+
+[Service]
+Type=simple
+User=BitcoinTitanium
+ExecStart=/opt/BitcoinTitanium/BitcoinTitaniumd
+
+[Install]
+WantedBy=multi-user.target

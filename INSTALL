@@ -1,0 +1,9 @@
+Building BitcoinTitanium
+
+See doc/readme-qt.rst for instructions on building BitcoinTitanium Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of BitcoinTitanium.
+
+See doc/build-*.txt for instructions on building BitcoinTitaniumd,
+the intended-for-services, no-graphical-interface, reference
+implementation of BitcoinTitanium.

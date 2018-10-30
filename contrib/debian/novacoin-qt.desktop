@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=BitcoinTitanium
+Comment=BitcoinTitanium P2P Cryptocurrency
+Comment[ru]=BitcoinTitanium, P2P криптовалюта
+Comment[fr]=BitcoinTitanium, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=BitcoinTitanium, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/BitcoinTitanium-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/BitcoinTitanium80.xpm
+MimeType=x-scheme-handler/BitcoinTitanium;
+Categories=Office;

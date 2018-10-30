@@ -1,0 +1,5 @@
+BitcoinTitanium-qt usr/bin
+share/pixmaps/BitcoinTitanium32.xpm usr/share/pixmaps
+share/pixmaps/BitcoinTitanium80.xpm usr/share/pixmaps
+debian/BitcoinTitanium-qt.desktop usr/share/applications
+debian/BitcoinTitanium-qt.protocol usr/share/kde4/services/
